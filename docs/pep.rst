@@ -152,7 +152,7 @@ type hints:
 Tag strings extract more than just a callable from the "thunk". They also
 provide Python string formatting info:
 
-.. code-block::
+.. code-block:: python
 
     def greet(*args: str | Thunk) -> str:
         """Thunks can have string formatting specs and conversions."""
