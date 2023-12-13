@@ -23,7 +23,8 @@ def greet3(*args):
     # Second arg is a "thunk" tuple for the interpolation.
     getvalue = args[1][0]
     recipient = getvalue().upper()
-    return f"{salutation} {recipient}!"
+    greeting_message = args[2].strip()
+    return f"{salutation} {recipient} {greeting_message}!"
 
 
 def greet4(*args):

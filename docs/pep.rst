@@ -69,7 +69,7 @@ Let's start with a tag string which simply returns a static greeting:
 
 .. code-block:: python
 
-    def greet():
+    def greet(*args):
         """Give a static greeting."""
         return "Hello!"
 
@@ -106,7 +106,8 @@ a value should be inserted:
         # Second arg is a "thunk" tuple for the interpolation.
         getvalue = args[1][0]
         recipient = getvalue().upper()
-        return f"{salutation} {recipient}!"
+        greeting_message = args[2].strip()
+        return f"{salutation} {recipient} {greeting_message}!"
 
     name = "World"
     result = greet"Hello {name:s} nice to meet you"
@@ -118,6 +119,7 @@ strings:
 
 - `args[0]` is still the string, this time with a trailing space
 - `args[1]` is an interpolation expression -- the ``{name}`` part
+- `args[2]` is the final string segment of the greeting with a leading space.
 - Tag strings represent this interpolation part as a *thunk*
 - A thunk is a tuple whose first item is a lambda
 - Calling this lambda evaluates the expression using the usual lexical scoping
@@ -145,7 +147,7 @@ type hints:
         return f"{''.join(result)}!"
 
         name = "World"
-        assert greet4"Hello {name}" == "Hello WORLD!"
+        assert greet"Hello {name}" == "Hello WORLD!"
 
 Tag strings extract more than just a callable from the "thunk". They also
 provide Python string formatting info:
@@ -169,7 +171,7 @@ provide Python string formatting info:
         return f"{''.join(result)}!"
 
     name = "World"
-    assert greet5"Hello {name!r:s}" == "Hello gv: World, r: name, c: r, f: s!"
+    assert greet"Hello {name!r:s}" == "Hello gv: World, r: name, c: r, f: s!"
 
 You can see the other parts getting extracted:
 
